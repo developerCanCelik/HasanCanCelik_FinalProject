@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+@using EntityLayer.Entities
+@model List<User>
+
+<table class="table table-hover">
+    <thead>
+        <th scope="col">Kullanıcı İsmi</th>
+        <th scope="col">Kullanıcı E-mail</th>
+        <th scope="col">Kullanıcı Şifre</th>
+        <th scope="col">Admin</th>
+        <th scope="col">Güncelle</th>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th>@item.UserName</th>
+                <td>@item.Email</td>
+                <td>@item.Password</td>
+                <td>@item.IsAdmin</td>
+                <td><button type="button" onclick="UpdateModel(@item.UserID,'@item.UserName','@item.Email','@item.Password','@item.IsAdmin')" class="btn btn-primary" data-toggle="modal">Güncelle</button></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="modal" id="UserUpdateModel" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Kullanıcı Güncelle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Kapat">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-action="Update" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="hidden" name="UserID" id="UpdateId" class="form-control" />
+                        <input type="text" name="UserName" id="UpdateName" class="form-control" placeholder="Kullanıcı İsmi" />
+                        <input type="email" name="Email" id="UpdateMail" class="form-control" placeholder="Kullanıcı Email" />
+                        <input type="password" name="Password" id="UpdatePass" class="form-control" placeholder="Kullanıcı Şifre" />         
+                        <input type="text" name="IsAdmin" id="UpdateAdmin" class="form-control" placeholder="Admin?" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                    <button type="submit" class="btn btn-primary">Güncelle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function UpdateModel(Id,Name,Email,Pass,Admin){
+        
+        $('#UpdateId').val(Id);
+        $('#UpdateName').val(Name);
+        $('#UpdateMail').val(Email);
+        $('#UpdatePass').val(Pass);
+        $('#UpdateAdmin').val(Admin);
+        $('#UserUpdateModel').modal('show');
+    }
+    
+</script>

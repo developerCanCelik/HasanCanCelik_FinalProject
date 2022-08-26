@@ -1,0 +1,37 @@
+﻿@using EntityLayer.Entities
+
+@{
+    ViewData["Title"] = "UpdateProduct";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+@model EntityLayer.Entities.Product
+
+<form method="POST" id="form" asp-action="Update" autocomplete="off">
+      @foreach (var item in ViewBag.writeId as List<Product>)
+      {
+    <input type="hidden" name="UserID" value="@item.UserID" class="form-control" id="title" />
+     <input type="hidden" name="ProductID" value="@item.ProductID" class="form-control" id="title"/>
+    <input type="hidden" name="IsPublish" value="False" class="form-control" id="title" /> 
+    <div class="form-group">
+        <input type="text" value="@item.ProductName" name="ProductName" class="form-control" id="title" placeholder="Ürün İsmi" />
+    </div>
+    <div class="form-group">
+        <input type="number" value="@item.Price" name="Price" class="form-control" id="subtitle" placeholder="Ürün Fiyat" />
+    </div>
+    <div class="form-group">
+        <input type="number" value="@item.Stock" name="Stock" class="form-control" id="subtitle" placeholder="Stok Miktar" />
+    </div>
+    <div>
+        <label>Kategori Seçiniz</label>
+        @Html.DropDownListFor(m => m.CategoryID, (List<SelectListItem>)ViewBag.categoryVal, new {@class="form-control"})
+    </div>
+    <div>
+        <label>Tag Seçiniz</label>
+        @Html.DropDownListFor(m => m.TagID, (List<SelectListItem>)ViewBag.tagVal, new {@class="form-control"})
+    </div>
+    <br />
+    <br />
+    <button type="submit"  class="btn btn-primary">Güncelle</button>
+    }
+</form>
+

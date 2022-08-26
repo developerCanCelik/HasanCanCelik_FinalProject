@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using EntityLayer.Entities
+@model List<Product>
+
+<style>
+body {
+  background-image: url('../img/background.jpg') !important;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  overflow-x: hidden;
+}
+.box {
+  align-items: center;
+  justify-content: center;
+  width: 700px;
+  height: 300px;
+  margin-bottom: 5px;
+  transform: translateX(400%);
+  transition: transform 0.4s ease;
+}
+.box:nth-of-type(even) {
+  transform: translateX(-400%);
+}
+.box.show {
+  transform: translateX(0);
+}
+</style>
+
+ <header>
+        <div class="container">
+            <div class="row">
+                <div class=" text-center">
+                    <div class="site-heading" >
+                        <h1 style="color:white">ÜRÜNLER </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+</header>
+@foreach (var item in Model) {
+    <div class="box">
+            <div class="card text-center">
+  <div class="card-header">@item.Category.CategoryName</div>
+  <div class="card-body">
+    <h5 class="card-title">@item.ProductName.ToUpper()</h5>
+        <p class="card-text"> Ürün Fiyatı: @item.Price ₺ ~ Stok Miktarı: @item.Stock Adet</p>
+    <a class="btn btn-success" onclick="calistir(@item.Stock)" asp-route-id="@item.ProductID" asp-action="BuyProduct">Satın Al</a>  
+</div>
+  <div class="card-footer text-muted">
+     <p class="post-meta">@item.Tag.TagName | Satıcı @item.User.UserName tarafından yayınlandı</p>
+  </div>
+
+</div>
+    </div>
+
+}
+
+
+
+<script>
+    function calistir(stok){
+        if(stok == 0){
+            alert("Stokta ürün kalmadı...")
+        }
+    }
+    const boxes = document.querySelectorAll('.box')
+    
+    window.addEventListener('scroll', checkBoxes)
+    checkBoxes()
+function checkBoxes() {
+    const triggerBottom = window.innerHeight / 5 * 4
+    boxes.forEach(box => {
+        const boxTop = box.getBoundingClientRect().top
+        if(boxTop < triggerBottom) {
+            box.classList.add('show')
+        } else {
+            box.classList.remove('show')
+        }
+    })
+}
+</script>
+
+
+ 

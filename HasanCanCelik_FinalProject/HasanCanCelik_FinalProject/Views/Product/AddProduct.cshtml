@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewData["Title"] = "AddProduct";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+@model EntityLayer.Entities.Product
+
+<form method="POST" id="form" asp-action="Create" autocomplete="off">
+    <input type="hidden" name="IsPublish" value="False" class="form-control" id="title" /> 
+    <div class="form-group">
+        
+        <input type="text" name="ProductName" class="form-control" id="title" placeholder="Ürün İsmi" />
+    </div>
+    <div class="form-group">
+        <input type="number" name="Price" class="form-control" id="subtitle" placeholder="Ürün Fiyat" />
+    </div>
+    <div class="form-group">
+        <input type="number" name="Stock" class="form-control" id="subtitle" placeholder="Stok Miktar" />
+    </div>
+    <div>
+        <label>Kategori Seçiniz</label>
+        @Html.DropDownListFor(m => m.CategoryID, (List<SelectListItem>)ViewBag.categoryVal, new {@class="form-control"})
+    </div>
+    <div>
+        <label>Tag Seçiniz</label>
+        @Html.DropDownListFor(m => m.TagID, (List<SelectListItem>)ViewBag.tagVal, new {@class="form-control"})
+    </div>
+    <br />
+    <button type="submit" value="Create" class="btn btn-primary">Ekle</button>
+
+</form>
+@if (TempData["mesaj"] != null)
+{
+   <div class="modal" id="validation" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Dikkat</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Kapat">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+                <div class="modal-body">
+                    <p>@TempData["mesaj"].ToString()</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                </div>
+    
+        </div>
+    </div>
+</div>
+  <script>
+    $('#validation').modal('show');
+    </script>
+}
